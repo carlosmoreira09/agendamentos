@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Agendamento</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
-    </script>
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style>
-</head>
+@include('layouts.head')
 
 <body class="antialiased">
     @include('layouts.navbar')
@@ -29,11 +6,21 @@
         <h2 class="title mt-2"> Agendamento de Consultas</h2>
     </div>
     <hr>
+
+        <!-- Button trigger modal -->
+
+        <div class="btn-group mt-2" role="group" aria-label="Default button group">
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                data-bs-target="#cadastraAgendamento">Cadastrar consulta</button>
+        </div>
     @if (count($agendamentos) === 0)
         <h4 class="title mt-5"> Você não possui agendamentos </h4>
     @else
+    
+
+
         <div>
-            <table class="table table-striped-columns mt-5 mb-4">
+            <table class="table table-striped-columns mt-3 mb-4">
                 <thead>
                     <tr>
                         <td>Deletar</td>
@@ -43,7 +30,7 @@
                         <td>Forma de Pagamento</td>
                         <td>Pago?</td>
                         <td>Observações</td>
-                        @if($agendamentos->count() > 0)
+                        @if($agendamentos->count() > 1)
                         <td>
                         <button class="btn btn-danger" id="bulk_delete" data-toggle="modal" data-target="#bulkModal" disabled>Deletar Todos </button>
                         </td>
@@ -54,7 +41,7 @@
 
                     @foreach ($agendamentos as $agendamento)
                         <tr>
-                            <td><input type="checkbox" value="{{$agendamento->id}}" name="id"></td>
+                            <td><input type="checkbox" name="id" id="deletarconsulta"></td>
                             <td>{{ $agendamento->name }}</td>
                             @php
                                 $date = explode(' ', $agendamento->date);
@@ -75,11 +62,12 @@
                                 <div class="btn-group" role="group" aria-label="Default button group">
                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
                                         data-bs-target="#editarAgendamento{{ $agendamento->id }}">Editar</button>
-                                    <button type="button" class="btn btn-outline-dark disabled" data-bs-toggle="modal"
+                                    <button type="button" id="confirmardelete" class="btn btn-outline-dark" data-bs-toggle="modal"
                                         data-bs-target="#delAgendamento{{ $agendamento->id }}">Excluir</button>
                                 </div>
                             </td>
                         </tr>
+                        
                         <!-- Modal Editar Agendamento -->
                         <div class="modal fade" id="editarAgendamento{{ $agendamento->id }}" tabindex="-1"
                             aria-labelledby="editarAgendamentoLabel" aria-hidden="true">
@@ -158,12 +146,6 @@
     </table>
     </div>
 
-    <!-- Button trigger modal -->
-
-    <div class="btn-group mt-2" role="group" aria-label="Default button group">
-        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
-            data-bs-target="#cadastraAgendamento">Cadastrar consulta</button>
-    </div>
 
     <!-- Modal Agendamento -->
     <div class="modal fade" id="cadastraAgendamento" tabindex="-1" aria-labelledby="cadastraAgendamentoLabel"
@@ -179,21 +161,23 @@
                 <div class="modal-body">
 
                     <div class="modal-body form-control">
+                        <label for="date">Data da Consulta</label>
+                        <input class="form-control" type="date" id="data" name="date">
+                        
+                        <label for="nome">Nome do Paciente</label>
+                        <input class="form-control" type="text" id="nome" name="name">
+                        
+                        <label for="cel">Contato</label>
+                        <input class="form-control" type="text" id="cel" name="cel">
+                        
+                        <label for="birthday">Data de Nascimento</label>
+                        <input class="form-control" type="date" id="birthday" name="birthday">
+                        
+                        <label for="type">Forma de Pagamento</label>
+                        <input class="form-control" type="text" id="type" name="type">
 
-                        <input class="form-control" type="date" id="data" placeholder="Data do agendamento"
-                            name="date">
-                        <br>
-                        <input class="form-control" type="text" id="nome" placeholder="Nome do paciente"
-                            name="name">
-                        <br>
-                        <input class="form-control" type="text" id="cel" placeholder="Telefone"
-                            name="cel">
-                        <br>
-                        <input class="form-control" type="text" id="type" placeholder="Forma de Pagamento"
-                            name="type">
-                        <br>
-                        <input class="form-control" type="textarea" id="note" placeholder="Observações"
-                            name="note">
+                        <label for="note">Observações</label>
+                        <input class="form-control" type="textarea" id="note" name="note">
 
                     </div>
                     <div class="modal-footer">

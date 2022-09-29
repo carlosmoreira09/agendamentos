@@ -29,6 +29,7 @@ class AgendamentoController extends Controller
         $date = $request->input('date');
         $cel = $request->input('cel');
         $type = $request->input('type');
+        $birthday = $request->input('birthday');
         $paid = 0;
         $note = $request->input('note');
 
@@ -42,22 +43,25 @@ class AgendamentoController extends Controller
             'note' => $note,
             ]
         );
-        // $data = array(
-        //     'name' => $name,
-        //     'date' => $date,
-        //     'cel' => $cel,
-        //     'type' => $type,
-        //     'paid' => $paid,
-        //     'note' => $note,
+        // check registro no DB        
 
-        // );
+        $cadastrapaciente = DB::table('pacientes')->insert(
+            [
+                'name' => $name,
+                'birthday' => $birthday,
+                'celphone' => $cel,
+                'ultimaconsulta' => $date,
+                
+            ]
+        );
 
-        if($agenda) {
+        if($agenda && $cadastrapaciente) {
             return redirect()->route('homepage');
             } else {
 
-                return Redirect::route('homepage')->with(['type' => 'error','message' => 'Ocorreu um Erro']);
+                return view('error');
             }
+            
     }
     public function edit($id, Request $request){
 

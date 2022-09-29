@@ -8,5 +8,7 @@
 </head>
 <body>
     <h1> Error </h1>
+
+    <a href="/agendamento">Voltar</a>
 </body>
 </html>
