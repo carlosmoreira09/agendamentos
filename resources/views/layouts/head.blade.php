@@ -21,4 +21,12 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
+    <script>
+function quitBox(cmd) {   
+    if (cmd=='quit') {
+        open(location, '_self').close();
+    }   
+    return false;   
+}
+      </script>
 </head>

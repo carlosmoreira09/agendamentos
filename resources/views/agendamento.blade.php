@@ -164,15 +164,16 @@
 
                                         <h5 class="modal-title" id="modalDelCategoriasLabel">Têm certeza excluir esta
                                             categoria?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
-                                        </button>
+                                        </button> --}}
+                                        <button type="button" onclick="quitBox('quit')" class="btn-close" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">Clique em sim para continuar</div>
                                     <div class="modal-footer">
                                         <a href="<?php echo route('agendamento.remove', ['id' => $agendamento->id]); ?>"><button type="submit"
                                                 class="btn btn-danger">Sim</button></a>
-                                        <button class="btn btn-secondary" type="button"
+                                        <button class="btn btn-secondary" onclick="quitBox('quit')" type="button"
                                             data-dismiss="modal">Não</button>
 
                                     </div>
