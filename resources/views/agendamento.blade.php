@@ -6,6 +6,12 @@
         <h2 class="title mt-2"> Agendamento de Consultas</h2>
     </div>
     <hr>
+    
+    @if($errors->any())
+    <div class="alert alert-danger">
+        {{$errors->first()}}
+    </div>
+    @endif
 
         <!-- Button trigger modal -->
 
@@ -26,6 +32,7 @@
                         <td>Deletar</td>
                         <td>Nome</td>
                         <td>Data</td>
+                        <td>Hora</td>
                         <td>Telefone</td>
                         <td>Forma de Pagamento</td>
                         <td>Pago?</td>
@@ -50,6 +57,7 @@
 
                             @endphp
                             <td>{{ $fixdate }}</td>
+                            <td>{{ $agendamento->hora }}</td>
                             <td>{{ $agendamento->cel }}</td>
                             <td>{{ $agendamento->typepayment }}</td>
                             @if ($agendamento->paid == '1')
@@ -86,18 +94,50 @@
 
                                             <div class="modal-body form-control">
 
+                                                <label for="editardata">Data da Consulta</label>
                                                 <input class="form-control" type="date" id="editardata"
                                                     value="{{ $agendamento->date }}" name="editarDate">
+                                                
                                                 <br>
+
+                                                <label for="editarHora">Horário da Consulta</label>
+                                                <select name="editarHora" id="editarHora">
+                                                    <option value="{{$agendamento->hora}}" selected>{{$agendamento->hora}}</option>
+                                                    <option value="8:00">8:00</option>
+                                                    <option value="8:30">8:30</option>
+                                                    <option value="9:00">9:00</option>
+                                                    <option value="9:30">9:30</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="10:30">10:30</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="11:30">11:30</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="12:30">12:30</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="13:30">13:30</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="14:30">14:30</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="15:30">15:30</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="16:30">16:30</option>
+                                                    <option value="17:00">17:00</option>
+                                                </select>
+                                                <br>
+                                                 <br>
+                                                <label for="editarnome">Nome do Paciente</label>
                                                 <input class="form-control" type="text" id="editarnome"
                                                     value="{{ $agendamento->name }}" name="editarName">
-                                                <br>
+
+                                                <label for="editarcel">Contato</label>
                                                 <input class="form-control" type="text" id="editarcel"
                                                     value="{{ $agendamento->cel }}" name="editarCel">
-                                                <br>
+
+                                                <label for="editartype">Forma de Pagamento</label>
                                                 <input class="form-control" type="text" id="editartype"
                                                     value="{{ $agendamento->typepayment }}" name="editarType">
-                                                <br>
+                                                
+                                                <label for="editarnote">Observações</label>
                                                 <input class="form-control" type="textarea" id="editarnote"
                                                     value="{{ $agendamento->note }}" name="editarNote">
 
@@ -163,7 +203,33 @@
                     <div class="modal-body form-control">
                         <label for="date">Data da Consulta</label>
                         <input class="form-control" type="date" id="data" name="date">
-                        
+                        <br>
+                        <br>
+                        <label for="hora">Hora da Consulta</label>
+                        <select name="hora" id="hora">
+                            <option>Selecione o Horário</option>
+                            <option value="8:00">8:00</option>
+                            <option value="8:30">8:30</option>
+                            <option value="9:00">9:00</option>
+                            <option value="9:30">9:30</option>
+                            <option value="10:00">10:00</option>
+                            <option value="10:30">10:30</option>
+                            <option value="11:00">11:00</option>
+                            <option value="11:30">11:30</option>
+                            <option value="12:00">12:00</option>
+                            <option value="12:30">12:30</option>
+                            <option value="13:00">13:00</option>
+                            <option value="13:30">13:30</option>
+                            <option value="14:00">14:00</option>
+                            <option value="14:30">14:30</option>
+                            <option value="15:00">15:00</option>
+                            <option value="15:30">15:30</option>
+                            <option value="16:00">16:00</option>
+                            <option value="16:30">16:30</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                        <br>
+                        <br>
                         <label for="nome">Nome do Paciente</label>
                         <input class="form-control" type="text" id="nome" name="name">
                         

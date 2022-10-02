@@ -29,15 +29,23 @@ class AgendamentoController extends Controller
         $date = $request->input('date');
         $cel = $request->input('cel');
         $type = $request->input('type');
+        $hora = $request->input('hora');
         $birthday = $request->input('birthday');
         $paid = 0;
-        $note = $request->input('note');
+        $note = $request->input('note');   
+
+        $checkhora = DB::table('agendamentos')->whereHora($hora)->get()->first();
+
+        if($checkhora) { 
+            return Redirect::back()->withErrors(['msg' => 'Já possui uma consulta nesse horário!']);
+        }
 
        $agenda = DB::table('agendamentos')->insert(
             [
             'name' => $name,
             'date' => $date,
             'cel' => $cel,
+            'hora' => $hora,
             'typepayment' => $type,
             'paid' => $paid,
             'note' => $note,
@@ -53,7 +61,7 @@ class AgendamentoController extends Controller
                 'ultimaconsulta' => $date,
                 
             ]
-        );
+        );  
 
         if($agenda && $cadastrapaciente) {
             return redirect()->route('homepage');
@@ -68,10 +76,17 @@ class AgendamentoController extends Controller
 
         $name = $request->input('editarName');
         $date = $request->input('editarDate');
+        $hora = $request->input('editarHora');
         $cel = $request->input('editarCel');
         $type = $request->input('editarType');
         $note = $request->input('editarNote');
         $paid = 0;
+        
+        $checkhora = DB::table('agendamentos')->whereHora($hora)->get()->first();
+
+        if($checkhora) { 
+            return Redirect::back()->withErrors(['msg' => 'Já possui uma consulta nesse horário!']);
+        }
 
         $editarAgendamento = DB::table('agendamentos')->where('id', '=', $id)
             ->update(
@@ -79,6 +94,7 @@ class AgendamentoController extends Controller
                 'name' => $name,
                 'date' => $date,
                 'cel' => $cel,
+                'hora' => $hora,
                 'typepayment' => $type,
                 'paid' => $paid,
                 'note' => $note,
@@ -98,7 +114,7 @@ class AgendamentoController extends Controller
             return redirect()->route('homepage');
             } else {
 
-                return Redirect::route('homepage')->with(['type' => 'error','message' => 'Ocorreu um Erro']);
+                return view('error');
             }
     }
     public function remove($id) {
@@ -108,7 +124,7 @@ class AgendamentoController extends Controller
 
             return redirect()->route('homepage');
         } else {
-            return Redirect::route('homepage')->with(['type' => 'error','message' => 'Ocorreu um Erro']);
+            return view('error');
         }
     }
     public function bulk_remove($id) {
@@ -118,7 +134,8 @@ class AgendamentoController extends Controller
 
             return redirect()->route('homepage');
         } else {
-            return Redirect::route('homepage')->with(['type' => 'error','message' => 'Ocorreu um Erro']);
+            return view('error');
+            
         }
     }
 }

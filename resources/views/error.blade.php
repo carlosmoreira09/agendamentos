@@ -7,8 +7,14 @@
     <title>Error Page</title>
 </head>
 <body>
-    <h1> Error </h1>
-
+    <br>
+    <h2> Error </h2>
+    <br>
+    <br>
+    <br>
+    @if($errors->any())
+    <h4>{{$errors->first()}}</h4>
+    @endif
     <a href="/agendamento">Voltar</a>
 </body>
 </html>
